@@ -1,0 +1,9 @@
+application:
+  customer-list:
+    path: customers.txt
+  office-location:
+    latitude: 53.339428
+    longitude: -6.257664
+  range-within:
+    amount: 100
+    unit: km
