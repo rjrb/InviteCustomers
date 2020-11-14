@@ -1,6 +1,6 @@
 package com.ramirezblauvelt.invitecustomers.services;
 
-import com.ramirezblauvelt.invitecustomers.beans.Customer;
+import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,19 +20,19 @@ public class ReadCustomers {
 
 	private final Logger logger = LoggerFactory.getLogger(ReadCustomers.class);
 	private final LoadFile loadFile;
-	private final ParseData parseData;
+	private final ParseCustomerData parseCustomerData;
 
-	public ReadCustomers(LoadFile loadFile, ParseData parseData) {
+	public ReadCustomers(LoadFile loadFile, ParseCustomerData parseCustomerData) {
 		this.loadFile = loadFile;
-		this.parseData = parseData;
+		this.parseCustomerData = parseCustomerData;
 	}
 
-	public List<Customer> readCustomers() throws IOException {
+	public List<CustomerInput> readCustomers() throws IOException {
 		logger.info("Reading file {}", filePath);
 		return loadFile.readFile(Paths.get(filePath))
 			.stream()
 			.peek(logger::trace)
-			.map(parseData::parseData)
+			.map(parseCustomerData::parseInputData)
 			.peek(customer -> logger.trace("{}", customer))
 			.filter(Objects::nonNull)
 			.collect(Collectors.toList())

@@ -24,7 +24,7 @@ public class TestFileLoad {
 
 	@Test
 	void testFileLoad() throws IOException {
-		final String testCustomer = "{\"user_id\": 1, \"name\": \"Cerro Nutibara\", \"latitude\": \"6.21685669257658\", \"longitude\": \"-75.55700248857622\"}";
+		final String testCustomer = "{\"user_id\": 1, \"name\": \"Cerro Nutibara\", \"latitude\": \"6.2348022\", \"longitude\": \"-75.5787825\"}";
 
 		BDDMockito
 			.given(loadFile.readFile(Paths.get("")))

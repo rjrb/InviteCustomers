@@ -1,13 +1,13 @@
 package com.ramirezblauvelt.invitecustomers.beans;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class Customer {
+@AllArgsConstructor
+public class CustomerToInvite {
 
 	private Integer userID;
 	private String name;
-	private GpsLocationDegrees gpsLocationDegrees;
-	private double distanceFromOffice;
 
 }

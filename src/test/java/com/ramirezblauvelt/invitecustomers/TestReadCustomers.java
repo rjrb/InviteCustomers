@@ -1,6 +1,6 @@
 package com.ramirezblauvelt.invitecustomers;
 
-import com.ramirezblauvelt.invitecustomers.beans.Customer;
+import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.services.LoadFile;
 import com.ramirezblauvelt.invitecustomers.services.ReadCustomers;
 import org.assertj.core.api.Assertions;
@@ -36,7 +36,7 @@ public class TestReadCustomers {
 	@Test
 	void testReadCustomers() throws IOException {
 		final List<String> testCustomers = List.of(
-			"{\"user_id\": 1, \"name\": \"Cerro Nutibara\", \"latitude\": \"6.21685669257658\", \"longitude\": \"-75.55700248857622\"}",
+			"{\"user_id\": 1, \"name\": \"Cerro Nutibara\", \"latitude\": \"6.2348022\", \"longitude\": \"-75.5787825\"}",
 			"{\"user_id\": 2, \"name\": \"UPB\", \"latitude\": \"6.245377\", \"longitude\": \"-75.5928549\"}"
 		);
 
@@ -45,13 +45,13 @@ public class TestReadCustomers {
 			.willReturn(testCustomers)
 		;
 
-		final Customer expectedCustomer1 = new Customer();
+		final CustomerInput expectedCustomer1 = new CustomerInput();
 		expectedCustomer1.setUserID(1);
 		expectedCustomer1.setName("Cerro Nutibara");
-		expectedCustomer1.setLatitude("6.21685669257658");
-		expectedCustomer1.setLongitude("-75.55700248857622");
+		expectedCustomer1.setLatitude("6.2348022");
+		expectedCustomer1.setLongitude("-75.5787825");
 
-		final Customer expectedCustomer2 = new Customer();
+		final CustomerInput expectedCustomer2 = new CustomerInput();
 		expectedCustomer2.setUserID(2);
 		expectedCustomer2.setName("UPB");
 		expectedCustomer2.setLatitude("6.245377");
