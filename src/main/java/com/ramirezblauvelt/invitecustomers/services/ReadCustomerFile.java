@@ -1,36 +1,37 @@
 package com.ramirezblauvelt.invitecustomers.services;
 
-import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileEmpty;
-import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileNotFoundException;
-import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileReadException;
+import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReadCustomerFile {
 
+	@Value("${application.customer-list.path:customers.txt}")
+	private String filePath;
+
 	private final Logger logger = LoggerFactory.getLogger(ReadCustomerFile.class);
+	private final ReadFile readFile;
+	private final ParseCustomerData parseCustomerData;
 
-	public List<String> readFile(Path filePath) {
-		logger.info("Reading file {}", filePath);
-		if(Files.notExists(filePath)) {
-			throw new CustomerFileNotFoundException(filePath);
-		}
+	public ReadCustomerFile(ReadFile readFile, ParseCustomerData parseCustomerData) {
+		this.readFile = readFile;
+		this.parseCustomerData = parseCustomerData;
+	}
 
-		try {
-			if(Files.size(filePath) == 0) {
-				throw new CustomerFileEmpty();
-			}
-			return Files.readAllLines(filePath);
-		} catch (IOException ioException) {
-			throw new CustomerFileReadException(ioException);
-		}
+	public List<CustomerInput> readCustomerFile() {
+		return readFile.readFile(Paths.get(filePath))
+			.stream()
+			.peek(logger::trace)
+			.map(parseCustomerData::parseInputData)
+			.collect(Collectors.toList())
+		;
 	}
 
 }
