@@ -10,17 +10,15 @@ import org.springframework.stereotype.Service;
 public class CalculateDistance {
 
 	private final Logger logger = LoggerFactory.getLogger(CalculateDistance.class);
-	private final ConvertGpsLocation convertGpsLocation;
 	private final ValidateCoordinates validateCoordinates;
 
-	public CalculateDistance(ConvertGpsLocation convertGpsLocation, ValidateCoordinates validateCoordinates) {
-		this.convertGpsLocation = convertGpsLocation;
+	public CalculateDistance(ValidateCoordinates validateCoordinates) {
 		this.validateCoordinates = validateCoordinates;
 	}
 
 	public double calculateDistance(GpsLocationDegrees origin, GpsLocationDegrees destination, double earthRadius) {
-		final GpsLocationRadians originInRadians = convertGpsLocation.toRadians(validateCoordinates.validate(origin));
-		final GpsLocationRadians destinationInRadians = convertGpsLocation.toRadians(validateCoordinates.validate(destination));
+		final GpsLocationRadians originInRadians = toRadians(validateCoordinates.validate(origin));
+		final GpsLocationRadians destinationInRadians = toRadians(validateCoordinates.validate(destination));
 
 		final double angleDelta = Math.acos(
 			Math.sin(originInRadians.getLatitude()) * Math.sin(destinationInRadians.getLatitude())
@@ -29,5 +27,13 @@ public class CalculateDistance {
 
 		return earthRadius * angleDelta;
 	}
+
+	private GpsLocationRadians toRadians(GpsLocationDegrees gpsLocationDegrees) {
+		return new GpsLocationRadians(
+			Math.toRadians(gpsLocationDegrees.getLatitude()),
+			Math.toRadians(gpsLocationDegrees.getLongitude())
+		);
+	}
+
 
 }

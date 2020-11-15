@@ -1,7 +1,8 @@
 package com.ramirezblauvelt.invitecustomers;
 
-import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
-import com.ramirezblauvelt.invitecustomers.services.LoadFile;
+import com.ramirezblauvelt.invitecustomers.beans.Customer;
+import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
+import com.ramirezblauvelt.invitecustomers.services.ReadCustomerFile;
 import com.ramirezblauvelt.invitecustomers.services.ReadCustomers;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
 public class TestReadCustomers {
 
 	@MockBean
-	private LoadFile loadFile;
+	private ReadCustomerFile readCustomerFile;
 
 	private final ReadCustomers readCustomers;
 
@@ -34,28 +34,26 @@ public class TestReadCustomers {
 	}
 
 	@Test
-	void testReadCustomers() throws IOException {
+	void testReadCustomers() {
 		final List<String> testCustomers = List.of(
 			"{\"user_id\": 1, \"name\": \"Cerro Nutibara\", \"latitude\": \"6.2348022\", \"longitude\": \"-75.5787825\"}",
 			"{\"user_id\": 2, \"name\": \"UPB\", \"latitude\": \"6.245377\", \"longitude\": \"-75.5928549\"}"
 		);
 
 		BDDMockito
-			.given(loadFile.readFile(ArgumentMatchers.any(Path.class)))
+			.given(readCustomerFile.readFile(ArgumentMatchers.any(Path.class)))
 			.willReturn(testCustomers)
 		;
 
-		final CustomerInput expectedCustomer1 = new CustomerInput();
+		final Customer expectedCustomer1 = new Customer();
 		expectedCustomer1.setUserID(1);
 		expectedCustomer1.setName("Cerro Nutibara");
-		expectedCustomer1.setLatitude("6.2348022");
-		expectedCustomer1.setLongitude("-75.5787825");
+		expectedCustomer1.setGpsLocationDegrees(new GpsLocationDegrees(6.2348022, -75.5787825));
 
-		final CustomerInput expectedCustomer2 = new CustomerInput();
+		final Customer expectedCustomer2 = new Customer();
 		expectedCustomer2.setUserID(2);
 		expectedCustomer2.setName("UPB");
-		expectedCustomer2.setLatitude("6.245377");
-		expectedCustomer2.setLongitude("-75.5928549");
+		expectedCustomer2.setGpsLocationDegrees(new GpsLocationDegrees(6.245377, -75.5928549));
 
 		Assertions
 			.assertThat(readCustomers.readCustomers())

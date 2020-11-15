@@ -1,6 +1,8 @@
 package com.ramirezblauvelt.invitecustomers;
 
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
+import com.ramirezblauvelt.invitecustomers.exceptions.GpsLatitudeException;
+import com.ramirezblauvelt.invitecustomers.exceptions.GpsLongitudeException;
 import com.ramirezblauvelt.invitecustomers.services.ValidateCoordinates;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ public class TestValidateCoordinates {
 		badLatitude.setLongitude(0);
 
 		Assertions
-			.assertThatExceptionOfType(IllegalArgumentException.class)
+			.assertThatExceptionOfType(GpsLatitudeException.class)
 			.isThrownBy(() -> validateCoordinates.validate(badLatitude))
 			.withMessageContaining("Latitudes can only range between -90 to 90 degrees")
 		;
@@ -51,7 +53,7 @@ public class TestValidateCoordinates {
 		badLongitude.setLongitude(200);
 
 		Assertions
-			.assertThatExceptionOfType(IllegalArgumentException.class)
+			.assertThatExceptionOfType(GpsLongitudeException.class)
 			.isThrownBy(() -> validateCoordinates.validate(badLongitude))
 			.withMessageContaining("Longitudes can only range between -180 to 180 degrees")
 		;

@@ -13,7 +13,7 @@ public class OfficeGpsLocationDegrees extends GpsLocationDegrees {
 	@Value("${application.office-location.longitude}")
 	private double officeLongitude;
 
-	@Bean
+	@Bean("officeLocation")
 	public OfficeGpsLocationDegrees getOfficeLocation() {
 		setLatitude(officeLatitude);
 		setLongitude(officeLongitude);

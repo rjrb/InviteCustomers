@@ -122,7 +122,7 @@ public class TestParseCustomerData {
 
 		Assertions
 			.assertThatThrownBy(() -> parseCustomerData.parseCustomerInput(customerWithIllegalLatitude))
-				.hasMessageContaining("Error validating customer's GPS location")
+				.hasMessageContaining("Latitudes can only range between -90 to 90 degrees")
 		;
 
 		final CustomerInput customerWithIllegalLongitude = new CustomerInput();
@@ -133,7 +133,7 @@ public class TestParseCustomerData {
 
 		Assertions
 			.assertThatThrownBy(() -> parseCustomerData.parseCustomerInput(customerWithIllegalLongitude))
-				.hasMessageContaining("Error validating customer's GPS location")
+				.hasMessageContaining("Longitudes can only range between -180 to 180 degrees")
 		;
 	}
 

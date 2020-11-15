@@ -1,12 +1,11 @@
 package com.ramirezblauvelt.invitecustomers.services;
 
-import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
+import com.ramirezblauvelt.invitecustomers.beans.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
@@ -19,20 +18,22 @@ public class ReadCustomers {
 	private String filePath;
 
 	private final Logger logger = LoggerFactory.getLogger(ReadCustomers.class);
-	private final LoadFile loadFile;
+	private final ReadCustomerFile readCustomerFile;
 	private final ParseCustomerData parseCustomerData;
 
-	public ReadCustomers(LoadFile loadFile, ParseCustomerData parseCustomerData) {
-		this.loadFile = loadFile;
+	public ReadCustomers(ReadCustomerFile readCustomerFile, ParseCustomerData parseCustomerData) {
+		this.readCustomerFile = readCustomerFile;
 		this.parseCustomerData = parseCustomerData;
 	}
 
-	public List<CustomerInput> readCustomers() throws IOException {
+	public List<Customer> readCustomers() {
 		logger.info("Reading file {}", filePath);
-		return loadFile.readFile(Paths.get(filePath))
+		return readCustomerFile.readFile(Paths.get(filePath))
 			.stream()
 			.peek(logger::trace)
 			.map(parseCustomerData::parseInputData)
+			.peek(customerInput -> logger.trace("{}", customerInput))
+			.map(parseCustomerData::parseCustomerInput)
 			.peek(customer -> logger.trace("{}", customer))
 			.filter(Objects::nonNull)
 			.collect(Collectors.toList())

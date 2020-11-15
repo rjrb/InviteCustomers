@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ramirezblauvelt.invitecustomers.beans.Customer;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
+import com.ramirezblauvelt.invitecustomers.exceptions.CustomerParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class ParseCustomerData {
 			return objectMapper.readValue(customerData, CustomerInput.class);
 		} catch (IllegalArgumentException | JsonProcessingException jsonProcessingException) {
 			logger.error("Error parsing JSON input string", jsonProcessingException);
-			throw new RuntimeException("Error parsing JSON input string", jsonProcessingException);
+			throw new CustomerParseException(jsonProcessingException);
 		}
 	}
 
@@ -44,9 +45,6 @@ public class ParseCustomerData {
 		} catch (NumberFormatException numberFormatException) {
 			logger.error("Error parsing customer's GPS location", numberFormatException);
 			throw new RuntimeException("Error parsing customer's GPS location", numberFormatException);
-		} catch (IllegalArgumentException illegalArgumentException) {
-			logger.error("Error validating customer's GPS location", illegalArgumentException);
-			throw new RuntimeException("Error validating customer's GPS location", illegalArgumentException);
 		}
 		return customer;
 	}

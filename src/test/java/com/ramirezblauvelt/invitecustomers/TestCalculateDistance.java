@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -17,15 +16,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestCalculateDistance {
 
-	@Value("${application.earth-radius.amount:6371}")
-	private double earthRadius;
-
-	private final CalculateDistance calculateDistance;
+	/** Default radius for testing purposes (earth median radius) */
+	private static final double EARTH_RADIUS = 6371;
 
 	@Autowired
-	public TestCalculateDistance(CalculateDistance calculateDistance) {
-		this.calculateDistance = calculateDistance;
-	}
+	private CalculateDistance calculateDistance;
 
 	@Test
 	void testCalculateDistance() {
@@ -40,7 +35,7 @@ public class TestCalculateDistance {
 		dublin.setLongitude(-6.267494);
 
 		softAssertions
-			.assertThat(calculateDistance.calculateDistance(london, dublin, earthRadius))
+			.assertThat(calculateDistance.calculateDistance(london, dublin, EARTH_RADIUS))
 				.withFailMessage("Failed to calculate the distance from London to Dublin")
 				.isCloseTo(464, Percentage.withPercentage(0.5))
 		;
@@ -54,7 +49,7 @@ public class TestCalculateDistance {
 		sanFrancisco.setLongitude(-122.419420);
 
 		softAssertions
-			.assertThat(calculateDistance.calculateDistance(newYork, sanFrancisco, earthRadius))
+			.assertThat(calculateDistance.calculateDistance(newYork, sanFrancisco, EARTH_RADIUS))
 				.withFailMessage("Failed to calculate the distance from New York to San Francisco")
 				.isCloseTo(4130, Percentage.withPercentage(0.5))
 		;

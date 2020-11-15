@@ -8,6 +8,5 @@ public class Customer {
 	private Integer userID;
 	private String name;
 	private GpsLocationDegrees gpsLocationDegrees;
-	private double distanceFromOffice;
 
 }
