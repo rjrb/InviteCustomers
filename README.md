@@ -29,13 +29,19 @@ The application was built using Java/Spring Boot as language/framework, by creat
     ```
 
 1. CD into the directory `InviteCustomers`
+1. If in *NIX systems, make the Gradle Wrapper executable:
+
+    ```bash
+    chmod +x gradlew
+    ```
+
 1. Run the following command to execute the application:
 
     ```bash
-    gradlew bootRun
+    ./gradlew bootRun
     ```
 
-1. Open your web browser (or Postman or similar and run a `GET` request), and navigate to: <http://localhost:8080/invite>
+1. Open your web browser and navigate (or Postman or similar and run a `GET` request) to: <http://localhost:8080/invite>
 
     - It will pick by default the `customers.txt` file located in the root of the project
 
@@ -48,7 +54,13 @@ The application was built using Java/Spring Boot as language/framework, by creat
         {"user_id": 3, "name": "Jack Enright", "latitude": "52.3191841", "longitude": "-8.5072391"},
         {"user_id": 6, "name": "Theresa Enright", "latitude": "53.1229599", "longitude": "-6.2705202"},
         {"user_id": 4, "name": "Ian Kehoe", "latitude": "53.2451022", "longitude": "-6.238335"},
-        {"user_id": 5, "name": "Nora Dempsey", "latitude": "53.1302756", "longitude": "-6.2397222"}
+        {"user_id": 5, "name": "Nora Dempsey", "latitude": "53.1302756", "longitude": "-6.2397222"},
+        {"user_id": 24, "name": "Rose Enright", "latitude": "54.133333", "longitude": "-6.433333"},
+        {"user_id": 19, "name": "Enid Cahill", "latitude": "55.033", "longitude": "-8.112"},
+        {"user_id": 20, "name": "Enid Enright", "latitude": "53.521111", "longitude": "-9.831111"},
+        {"user_id": 21, "name": "David Ahearn", "latitude": "51.802", "longitude": "-9.442"},
+        {"user_id": 30, "name": "Nick Enright", "latitude": "53.761389", "longitude": "-7.2875"},
+        {"user_id": 23, "name": "Eoin Gallagher", "latitude": "54.080556", "longitude": "-6.361944"}
     ]
     ```
 
@@ -56,7 +68,7 @@ The application was built using Java/Spring Boot as language/framework, by creat
 1. To run the tests, run the following command:
 
     ```bash
-    gradlew test
+    ./gradlew test
     ```
 
     - Test results can be found at: `build/reports/tests/test`
@@ -67,7 +79,7 @@ The application was built using Java/Spring Boot as language/framework, by creat
 1. If you want to build the application and execute all tests, create a coverage report and update SonarCloud report, you can run:
 
     ```bash
-    gradlew clean build jacocoTestReport sonarqube
+    ./gradlew clean build jacocoTestReport sonarqube
     ```
 
     - Generated binaries can be found at: `build/libs`
