@@ -14,7 +14,9 @@ application:
 ---
 
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
 
 application:
   customer-list: customers.txt
@@ -23,7 +25,9 @@ application:
 ---
 
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
 
 application:
   customer-list: customers.txt
@@ -32,7 +36,9 @@ application:
 ---
 
 spring:
-  profiles: prod
+  config:
+    activate:
+      on-profile: prod
 
 server:
   port: 443
