@@ -4,7 +4,7 @@ import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerToInvite;
 import com.ramirezblauvelt.invitecustomers.exceptions.NoCustomersToInvite;
 import com.ramirezblauvelt.invitecustomers.services.InviteCustomers;
-import com.ramirezblauvelt.invitecustomers.services.ReadFile;
+import com.ramirezblauvelt.invitecustomers.services.LoadCustomerFile;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,7 +23,7 @@ import java.util.List;
 @SpringBootTest(
 	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 	properties = {
-		"application.customer-list.path=customers.txt",
+		"application.customer-list=customers.txt",
 		"application.earth-radius-km=6371",
 		"application.range-within-km=100",
 		"application.office-location.latitude=53.339428",
@@ -34,7 +34,7 @@ import java.util.List;
 class TestInviteCustomers {
 
 	@MockBean
-	private ReadFile readFile;
+	private LoadCustomerFile loadCustomerFile;
 
 	@Autowired
 	private InviteCustomers inviteCustomers;
@@ -47,7 +47,7 @@ class TestInviteCustomers {
 		);
 
 		BDDMockito
-			.given(readFile.readFile(ArgumentMatchers.any(Path.class)))
+			.given(loadCustomerFile.readFile(ArgumentMatchers.any(Path.class)))
 			.willReturn(testCustomers)
 		;
 
@@ -101,7 +101,7 @@ class TestInviteCustomers {
 		);
 
 		BDDMockito
-			.given(readFile.readFile(ArgumentMatchers.any(Path.class)))
+			.given(loadCustomerFile.readFile(ArgumentMatchers.any(Path.class)))
 			.willReturn(testCustomers)
 		;
 

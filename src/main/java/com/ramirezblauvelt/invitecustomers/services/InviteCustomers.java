@@ -15,18 +15,18 @@ import java.util.stream.Collectors;
 public class InviteCustomers {
 
 	private final Logger logger = LoggerFactory.getLogger(InviteCustomers.class);
-	private final ReadCustomerFile readCustomerFile;
+	private final ReadAndParseCustomerFile readAndParseCustomerFile;
 	private final ParseCustomerData parseCustomerData;
 	private final FilterCustomers filterCustomers;
 
-	public InviteCustomers(ReadCustomerFile readCustomerFile, ParseCustomerData parseCustomerData, FilterCustomers filterCustomers) {
-		this.readCustomerFile = readCustomerFile;
+	public InviteCustomers(ReadAndParseCustomerFile readAndParseCustomerFile, ParseCustomerData parseCustomerData, FilterCustomers filterCustomers) {
+		this.readAndParseCustomerFile = readAndParseCustomerFile;
 		this.parseCustomerData = parseCustomerData;
 		this.filterCustomers = filterCustomers;
 	}
 
 	public List<CustomerToInvite> inviteCustomersFromFile() {
-		return inviteCustomersFromList(readCustomerFile.readCustomerFile());
+		return inviteCustomersFromList(readAndParseCustomerFile.readCustomerFile());
 	}
 
 	public List<CustomerToInvite> inviteCustomersFromList(List<CustomerInput> inputList) {

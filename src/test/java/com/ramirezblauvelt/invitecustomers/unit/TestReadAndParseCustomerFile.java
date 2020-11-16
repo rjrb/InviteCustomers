@@ -1,8 +1,8 @@
 package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
-import com.ramirezblauvelt.invitecustomers.services.ReadCustomerFile;
-import com.ramirezblauvelt.invitecustomers.services.ReadFile;
+import com.ramirezblauvelt.invitecustomers.services.LoadCustomerFile;
+import com.ramirezblauvelt.invitecustomers.services.ReadAndParseCustomerFile;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -19,21 +18,15 @@ import java.nio.file.Path;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(
-	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-	properties = {"application.customer-list.path=customers.txt"}
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TestReadCustomerFile {
+class TestReadAndParseCustomerFile {
 
 	@MockBean
-	private ReadFile readFile;
-
-	@Value("${application.customer-list.path:customers.txt}")
-	private String filePath;
+	private LoadCustomerFile loadCustomerFile;
 
 	@Autowired
-	private ReadCustomerFile readCustomerFile;
+	private ReadAndParseCustomerFile readAndParseCustomerFile;
 
 	@Test
 	void testReadCustomerFile() {
@@ -43,7 +36,7 @@ class TestReadCustomerFile {
 		);
 
 		BDDMockito
-			.given(readFile.readFile(ArgumentMatchers.any(Path.class)))
+			.given(loadCustomerFile.readFile(ArgumentMatchers.any(Path.class)))
 			.willReturn(testCustomers)
 		;
 
@@ -60,7 +53,7 @@ class TestReadCustomerFile {
 		expectedCustomer2.setLongitude("-75.5928549");
 
 		Assertions
-			.assertThat(readCustomerFile.readCustomerFile())
+			.assertThat(readAndParseCustomerFile.readCustomerFile())
 				.isNotEmpty()
 				.hasSize(2)
 				.containsExactlyInAnyOrder(expectedCustomer1, expectedCustomer2)

@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(
 	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 	properties = {
-		"application.customer-list.path=src/test/resources/test-customers-invalid-structure.txt",
+		"application.customer-list=src/test/resources/test-customers-invalid-structure.txt",
 		"application.earth-radius-km=6371",
 		"application.range-within-km=100",
 		"application.office-location.latitude=53.339428",

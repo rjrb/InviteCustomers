@@ -1,12 +1,42 @@
+spring.profiles.active: dev
+
 server:
   error:
     include-message: always
+  port: 8080
 
 application:
-  customer-list:
-    path: customers.txt
   office-location:
     latitude: 53.339428
     longitude: -6.257664
-  range-within-km: 100
   earth-radius-km: 6371
+
+---
+
+spring:
+  profiles: dev
+
+application:
+  customer-list: customers.txt
+  range-within-km: 100
+
+---
+
+spring:
+  profiles: test
+
+application:
+  customer-list: customers.txt
+  range-within-km: 100
+
+---
+
+spring:
+  profiles: prod
+
+server:
+  port: 443
+
+application:
+  customer-list: customers.txt
+  range-within-km: 100

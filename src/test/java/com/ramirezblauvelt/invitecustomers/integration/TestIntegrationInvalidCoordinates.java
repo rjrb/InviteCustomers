@@ -1,7 +1,6 @@
 package com.ramirezblauvelt.invitecustomers.integration;
 
 import com.ramirezblauvelt.invitecustomers.exceptions.GpsLatitudeException;
-import com.ramirezblauvelt.invitecustomers.exceptions.ParseCustomerInputException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(
 	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 	properties = {
-		"application.customer-list.path=src/test/resources/test-customers-invalid-latitude.txt",
+		"application.customer-list=src/test/resources/test-customers-invalid-latitude.txt",
 		"application.earth-radius-km=6371",
 		"application.range-within-km=100",
 		"application.office-location.latitude=53.339428",

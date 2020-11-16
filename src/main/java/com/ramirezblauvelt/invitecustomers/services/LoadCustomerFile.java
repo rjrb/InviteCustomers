@@ -13,9 +13,9 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Service
-public class ReadFile {
+public class LoadCustomerFile {
 
-	private final Logger logger = LoggerFactory.getLogger(ReadFile.class);
+	private final Logger logger = LoggerFactory.getLogger(LoadCustomerFile.class);
 
 	public List<String> readFile(Path filePath) {
 		if(Files.notExists(filePath)) {
@@ -25,10 +25,10 @@ public class ReadFile {
 
 		try {
 			if(Files.size(filePath) == 0) {
-				logger.error("File empty: {}", filePath);
+				logger.error("File empty: {}", filePath.toAbsolutePath());
 				throw new CustomerFileEmptyException();
 			}
-			logger.info("Reading file {}", filePath);
+			logger.info("Reading file {}", filePath.toAbsolutePath().normalize());
 			return Files.readAllLines(filePath);
 		} catch (IOException ioException) {
 			logger.error("Error reading file: {}", filePath);
