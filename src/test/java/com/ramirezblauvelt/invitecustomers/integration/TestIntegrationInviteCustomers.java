@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerToInvite;
+import com.ramirezblauvelt.invitecustomers.exceptions.NoCustomersToInvite;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -115,6 +116,30 @@ class TestIntegrationInviteCustomers {
 				expectedCustomer2,
 				expectedCustomer3
 			)
+		;
+	}
+
+	@Test
+	void testIntegrationInviteCustomersNoneInRange() throws Exception {
+		final List<CustomerInput> inputCustomerList = List.of(
+			new CustomerInput(1, "Alice Cahill", "51.9289300", "-10.27699"),
+			new CustomerInput(2, "Ian McArdle", "51.8856167", "-10.4240951"),
+			new CustomerInput(3, "Jack Enright", "52.3191841", "-8.5072391")
+		);
+
+		final Exception exceptionPost = mvc.perform(
+				post("/invite")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(inputCustomerList))
+			)
+			.andExpect(status().isNotFound())
+			.andDo(print())
+			.andReturn().getResolvedException()
+		;
+
+		Assertions
+			.assertThat(exceptionPost)
+				.isInstanceOf(NoCustomersToInvite.class)
 		;
 	}
 

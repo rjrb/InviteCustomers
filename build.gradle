@@ -47,16 +47,6 @@ jacocoTestReport {
 		xml.enabled = true
 		csv.enabled = false
 	}
-	afterEvaluate {
-		classDirectories.setFrom(files(classDirectories.files.collect {
-			fileTree(
-					dir: it,
-					exclude: [
-							'com/ramirezblauvelt/invitecustomers/InviteCustomersApplication.class'
-					]
-			)
-		}))
-	}
 }
 jacoco {
 	reportsDir = file("$buildDir/jacoco")
