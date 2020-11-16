@@ -73,7 +73,3 @@ The application was built using Java/Spring Boot as language/framework, by creat
     - Generated binaries can be found at: `build/libs`
     - Test results can be found at: `build/reports/tests/test`
     - Coverage results can be found at: `build/jacoco/test/html`
-
-### Important
-
->All distance calculations are being done based on the earth median radius which is considered to be of `6.371km` (see [Wikipedia](https://en.wikipedia.org/wiki/Earth_radius))
