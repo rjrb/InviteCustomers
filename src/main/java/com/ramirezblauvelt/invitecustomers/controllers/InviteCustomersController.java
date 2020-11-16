@@ -3,7 +3,6 @@ package com.ramirezblauvelt.invitecustomers.controllers;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerToInvite;
 import com.ramirezblauvelt.invitecustomers.services.InviteCustomers;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class InviteCustomersController {
 	}
 
 	@PostMapping("")
-	public List<CustomerToInvite> getCustomersToInviteFromList(@Validated @RequestBody List<CustomerInput> inputList) {
+	public List<CustomerToInvite> getCustomersToInviteFromList(@RequestBody List<CustomerInput> inputList) {
 		return inviteCustomers.inviteCustomersFromList(inputList);
 	}
 

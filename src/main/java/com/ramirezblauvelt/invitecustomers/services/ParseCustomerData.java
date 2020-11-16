@@ -6,6 +6,7 @@ import com.ramirezblauvelt.invitecustomers.beans.Customer;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
 import com.ramirezblauvelt.invitecustomers.exceptions.CustomerParseException;
+import com.ramirezblauvelt.invitecustomers.exceptions.ParseCustomerInputException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class ParseCustomerData {
 	}
 
 	public Customer parseCustomerInput(CustomerInput customerInput) {
+		System.out.println(customerInput);
 		final Customer customer = new Customer();
 		customer.setUserID(customerInput.getUserID());
 		customer.setName(customerInput.getName());
@@ -42,9 +44,9 @@ public class ParseCustomerData {
 			gpsLocationDegrees.setLatitude(Double.parseDouble(customerInput.getLatitude()));
 			gpsLocationDegrees.setLongitude(Double.parseDouble(customerInput.getLongitude()));
 			customer.setGpsLocationDegrees(validateCoordinates.validate(gpsLocationDegrees));
-		} catch (NumberFormatException numberFormatException) {
-			logger.error("Error parsing customer's GPS location", numberFormatException);
-			throw new RuntimeException("Error parsing customer's GPS location", numberFormatException);
+		} catch (NullPointerException | NumberFormatException parseCustomerException) {
+			logger.error("Error parsing customer's GPS location", parseCustomerException);
+			throw new ParseCustomerInputException(parseCustomerException);
 		}
 		return customer;
 	}

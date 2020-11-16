@@ -3,6 +3,8 @@ package com.ramirezblauvelt.invitecustomers;
 import com.ramirezblauvelt.invitecustomers.beans.Customer;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
+import com.ramirezblauvelt.invitecustomers.exceptions.CustomerParseException;
+import com.ramirezblauvelt.invitecustomers.exceptions.ParseCustomerInputException;
 import com.ramirezblauvelt.invitecustomers.services.ParseCustomerData;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -49,33 +51,33 @@ public class TestParseCustomerData {
 	void testParseDataExceptions() {
 		Assertions
 			.assertThatThrownBy(() -> parseCustomerData.parseInputData(null))
-				.isInstanceOf(RuntimeException.class)
+				.isInstanceOf(CustomerParseException.class)
 				.hasMessageContaining("Error parsing JSON input string")
 		;
 
 		Assertions
 			.assertThatThrownBy(() -> parseCustomerData.parseInputData(""))
-				.isInstanceOf(RuntimeException.class)
+				.isInstanceOf(CustomerParseException.class)
 				.hasMessageContaining("Error parsing JSON input string")
 		;
 
 		Assertions
 			.assertThatThrownBy(() -> parseCustomerData.parseInputData("foo"))
-				.isInstanceOf(RuntimeException.class)
+				.isInstanceOf(CustomerParseException.class)
 				.hasMessageContaining("Error parsing JSON input string")
 		;
 
 		final String testBadProperty = "{\"user\": 1, \"name\": \"Cerro Nutibara\", \"latitude\": \"6.2348022\", \"longitude\": \"-75.5787825\"}";
 		Assertions
 			.assertThatThrownBy(() -> parseCustomerData.parseInputData(testBadProperty))
-			.isInstanceOf(RuntimeException.class)
+			.isInstanceOf(CustomerParseException.class)
 			.hasMessageContaining("Error parsing JSON input string")
 		;
 
 		final String testExtraProperty = "{\"foo\": \"foo\", \"user_id\": 1, \"name\": \"Cerro Nutibara\", \"latitude\": \"6.2348022\", \"longitude\": \"-75.5787825\"}";
 		Assertions
 			.assertThatThrownBy(() -> parseCustomerData.parseInputData(testExtraProperty))
-			.isInstanceOf(RuntimeException.class)
+			.isInstanceOf(CustomerParseException.class)
 			.hasMessageContaining("Error parsing JSON input string")
 		;
 	}

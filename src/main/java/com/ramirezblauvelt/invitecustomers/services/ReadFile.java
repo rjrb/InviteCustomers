@@ -19,7 +19,7 @@ public class ReadFile {
 
 	public List<String> readFile(Path filePath) {
 		if(Files.notExists(filePath)) {
-			logger.error("File not found: {}", filePath);
+			logger.error("File not found: {}", filePath.toAbsolutePath());
 			throw new CustomerFileNotFoundException(filePath);
 		}
 

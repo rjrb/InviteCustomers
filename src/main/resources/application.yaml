@@ -1,3 +1,7 @@
+server:
+  error:
+    include-message: always
+
 application:
   customer-list:
     path: customers.txt

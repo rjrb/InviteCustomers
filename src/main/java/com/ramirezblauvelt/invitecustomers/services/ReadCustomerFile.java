@@ -28,7 +28,6 @@ public class ReadCustomerFile {
 	public List<CustomerInput> readCustomerFile() {
 		return readFile.readFile(Paths.get(filePath))
 			.stream()
-			.peek(logger::trace)
 			.map(parseCustomerData::parseInputData)
 			.collect(Collectors.toList())
 		;

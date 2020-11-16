@@ -12,7 +12,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+	properties = {
+		"application.earth-radius-km=6371",
+		"application.range-within-km=100",
+		"application.office-location.latitude=53.339428",
+		"application.office-location.longitude=-6.257664"
+	}
+)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestFilterCustomers {
 
