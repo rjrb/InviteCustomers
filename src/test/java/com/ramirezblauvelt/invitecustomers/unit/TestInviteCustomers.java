@@ -2,6 +2,7 @@ package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerToInvite;
+import com.ramirezblauvelt.invitecustomers.exceptions.NoCustomersToInvite;
 import com.ramirezblauvelt.invitecustomers.services.InviteCustomers;
 import com.ramirezblauvelt.invitecustomers.services.ReadFile;
 import org.assertj.core.api.Assertions;
@@ -92,4 +93,23 @@ class TestInviteCustomers {
 			.containsExactly(expectedCustomer)
 		;
 	}
+
+	@Test
+	void testInviteCustomersNoneInRange() {
+		final List<String> testCustomers = List.of(
+			"{\"user_id\": 2, \"name\": \"Someone not in range\", \"latitude\": \"6.245377\", \"longitude\": \"-75.5928549\"}"
+		);
+
+		BDDMockito
+			.given(readFile.readFile(ArgumentMatchers.any(Path.class)))
+			.willReturn(testCustomers)
+		;
+
+		Assertions
+			.assertThatThrownBy(() -> inviteCustomers.inviteCustomersFromFile())
+				.isInstanceOf(NoCustomersToInvite.class)
+				.hasMessageContaining("No customers to invite found")
+		;
+	}
+
 }

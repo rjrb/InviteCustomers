@@ -2,6 +2,7 @@ package com.ramirezblauvelt.invitecustomers.services;
 
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerToInvite;
+import com.ramirezblauvelt.invitecustomers.exceptions.NoCustomersToInvite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,17 +30,21 @@ public class InviteCustomers {
 	}
 
 	public List<CustomerToInvite> inviteCustomersFromList(List<CustomerInput> inputList) {
-		return inputList
+		final List<CustomerToInvite> customerToInviteList = inputList
 			.stream()
-			.peek(customerInput -> logger.trace("{}", customerInput))
 			.map(parseCustomerData::parseCustomerInput)
-			.peek(customer -> logger.trace("{}", customer))
 			.filter(filterCustomers::filterCustomersByDistanceToOffice)
 			.map(customer -> new CustomerToInvite(customer.getUserID(), customer.getName()))
 			.sorted(Comparator.comparingInt(CustomerToInvite::getUserID))
-			.peek(customerToInvite -> logger.trace("{}", customerToInvite))
 			.collect(Collectors.toList())
 		;
+
+		if(customerToInviteList.isEmpty()) {
+			throw new NoCustomersToInvite();
+		}
+
+		logger.info("Customers to invite: {}", customerToInviteList);
+		return customerToInviteList;
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.ramirezblauvelt.invitecustomers.integration;
 
-import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileNotFoundException;
+import com.ramirezblauvelt.invitecustomers.exceptions.CustomerParseException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(
 	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 	properties = {
-		"application.customer-list.path=src/test/resources/i-dont-exist-customers.txt",
+		"application.customer-list.path=src/test/resources/test-customers-invalid-structure.txt",
 		"application.earth-radius-km=6371",
 		"application.range-within-km=100",
 		"application.office-location.latitude=53.339428",
@@ -28,26 +28,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
-class TestIntegrationFileNotFound {
+class TestIntegrationInvalidJsonStructure {
 
 	private final MockMvc mvc;
 
 	@Autowired
-	public TestIntegrationFileNotFound(MockMvc mvc) {
+	public TestIntegrationInvalidJsonStructure(MockMvc mvc) {
 		this.mvc = mvc;
 	}
 
 	@Test
-	void testIntegrationFileNotFound() throws Exception {
+	void testIntegrationInvalidJsonStructure() throws Exception {
 		final Exception exceptionGet = mvc.perform(get("/invite"))
-			.andExpect(status().isInternalServerError())
+			.andExpect(status().isBadRequest())
 			.andReturn().getResolvedException()
 		;
 
 		Assertions
 			.assertThat(exceptionGet)
-				.isInstanceOf(CustomerFileNotFoundException.class)
-				.hasMessageContaining("Customer file not found in")
+				.isInstanceOf(CustomerParseException.class)
+				.hasMessageContaining("Error parsing JSON input string")
 		;
 	}
 

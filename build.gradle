@@ -52,8 +52,7 @@ jacocoTestReport {
 			fileTree(
 					dir: it,
 					exclude: [
-							'com/sophos/demoserverless/DemoServerlessApplication.class',
-							'com/sophos/demoserverless/LambdaHandler.class'
+							'com/ramirezblauvelt/invitecustomers/InviteCustomersApplication.class'
 					]
 			)
 		}))
