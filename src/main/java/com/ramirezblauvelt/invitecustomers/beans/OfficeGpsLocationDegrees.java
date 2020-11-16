@@ -1,10 +1,12 @@
 package com.ramirezblauvelt.invitecustomers.beans;
 
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EqualsAndHashCode(callSuper = false)
 public class OfficeGpsLocationDegrees extends GpsLocationDegrees {
 
 	@Value("${application.office-location.latitude}")

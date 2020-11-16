@@ -1,4 +1,4 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.services.ReadCustomerFile;
@@ -24,7 +24,7 @@ import java.util.List;
 	properties = {"application.customer-list.path=customers.txt"}
 )
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestReadCustomerFile {
+class TestReadCustomerFile {
 
 	@MockBean
 	private ReadFile readFile;

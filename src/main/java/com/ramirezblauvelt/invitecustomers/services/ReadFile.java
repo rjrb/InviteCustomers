@@ -1,6 +1,6 @@
 package com.ramirezblauvelt.invitecustomers.services;
 
-import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileEmpty;
+import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileEmptyException;
 import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileNotFoundException;
 import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileReadException;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class ReadFile {
 		try {
 			if(Files.size(filePath) == 0) {
 				logger.error("File empty: {}", filePath);
-				throw new CustomerFileEmpty();
+				throw new CustomerFileEmptyException();
 			}
 			logger.info("Reading file {}", filePath);
 			return Files.readAllLines(filePath);

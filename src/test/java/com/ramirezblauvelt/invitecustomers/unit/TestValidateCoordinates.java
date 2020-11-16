@@ -1,4 +1,4 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
 import com.ramirezblauvelt.invitecustomers.exceptions.GpsLatitudeException;
@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestValidateCoordinates {
+class TestValidateCoordinates {
 
 	private final ValidateCoordinates validateCoordinates;
 

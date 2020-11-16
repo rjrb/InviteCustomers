@@ -1,10 +1,9 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.Customer;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
 import com.ramirezblauvelt.invitecustomers.exceptions.CustomerParseException;
-import com.ramirezblauvelt.invitecustomers.exceptions.ParseCustomerInputException;
 import com.ramirezblauvelt.invitecustomers.services.ParseCustomerData;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestParseCustomerData {
+class TestParseCustomerData {
 
 	private final ParseCustomerData parseCustomerData;
 

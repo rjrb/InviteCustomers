@@ -1,4 +1,4 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.Customer;
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
@@ -22,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 	}
 )
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestFilterCustomers {
+class TestFilterCustomers {
 
 	@Autowired
 	private FilterCustomers filterCustomers;

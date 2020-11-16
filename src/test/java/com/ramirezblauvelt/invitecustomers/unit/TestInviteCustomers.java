@@ -1,4 +1,4 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
 import com.ramirezblauvelt.invitecustomers.beans.CustomerToInvite;
@@ -30,7 +30,7 @@ import java.util.List;
 	}
 )
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestInviteCustomers {
+class TestInviteCustomers {
 
 	@MockBean
 	private ReadFile readFile;

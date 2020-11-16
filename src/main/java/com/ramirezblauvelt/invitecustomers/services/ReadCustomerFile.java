@@ -1,8 +1,6 @@
 package com.ramirezblauvelt.invitecustomers.services;
 
 import com.ramirezblauvelt.invitecustomers.beans.CustomerInput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,6 @@ public class ReadCustomerFile {
 	@Value("${application.customer-list.path:customers.txt}")
 	private String filePath;
 
-	private final Logger logger = LoggerFactory.getLogger(ReadCustomerFile.class);
 	private final ReadFile readFile;
 	private final ParseCustomerData parseCustomerData;
 

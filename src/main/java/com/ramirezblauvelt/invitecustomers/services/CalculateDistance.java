@@ -2,14 +2,11 @@ package com.ramirezblauvelt.invitecustomers.services;
 
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationRadians;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CalculateDistance {
 
-	private final Logger logger = LoggerFactory.getLogger(CalculateDistance.class);
 	private final ValidateCoordinates validateCoordinates;
 
 	public CalculateDistance(ValidateCoordinates validateCoordinates) {

@@ -1,4 +1,4 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.integration;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,14 +36,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
-public class IntegrationTestInviteCustomers {
+class TestIntegrationInviteCustomers {
 
 	private final MockMvc mvc;
 	private final ObjectMapper objectMapper;
 
 	@Autowired
-	public IntegrationTestInviteCustomers(MockMvc mvc) {
+	public TestIntegrationInviteCustomers(MockMvc mvc) {
 		this.mvc = mvc;
 
 		objectMapper = new ObjectMapper();

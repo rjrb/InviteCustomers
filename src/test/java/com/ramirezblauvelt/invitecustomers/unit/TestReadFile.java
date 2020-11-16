@@ -1,6 +1,6 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.unit;
 
-import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileEmpty;
+import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileEmptyException;
 import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileNotFoundException;
 import com.ramirezblauvelt.invitecustomers.exceptions.CustomerFileReadException;
 import com.ramirezblauvelt.invitecustomers.services.ReadFile;
@@ -21,7 +21,7 @@ import java.util.List;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestReadFile {
+class TestReadFile {
 
 	@MockBean
 	private ReadFile readFile;
@@ -61,12 +61,12 @@ public class TestReadFile {
 		final Path fileEmpty = Paths.get("fe");
 		BDDMockito
 			.given(readFile.readFile(fileEmpty))
-			.willThrow(new CustomerFileEmpty())
+			.willThrow(new CustomerFileEmptyException())
 		;
 
 		Assertions
 			.assertThatThrownBy(() -> readFile.readFile(fileEmpty))
-				.isInstanceOf(CustomerFileEmpty.class)
+				.isInstanceOf(CustomerFileEmptyException.class)
 				.hasMessageContaining("empty")
 		;
 

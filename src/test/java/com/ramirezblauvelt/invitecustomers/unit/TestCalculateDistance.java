@@ -1,4 +1,4 @@
-package com.ramirezblauvelt.invitecustomers;
+package com.ramirezblauvelt.invitecustomers.unit;
 
 import com.ramirezblauvelt.invitecustomers.beans.GpsLocationDegrees;
 import com.ramirezblauvelt.invitecustomers.services.CalculateDistance;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestCalculateDistance {
+class TestCalculateDistance {
 
 	/** Default radius for testing purposes (earth median radius) */
 	private static final double EARTH_RADIUS = 6371;

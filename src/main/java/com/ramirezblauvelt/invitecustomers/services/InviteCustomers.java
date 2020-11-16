@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,11 +31,13 @@ public class InviteCustomers {
 	public List<CustomerToInvite> inviteCustomersFromList(List<CustomerInput> inputList) {
 		return inputList
 			.stream()
+			.peek(customerInput -> logger.trace("{}", customerInput))
 			.map(parseCustomerData::parseCustomerInput)
-			.filter(Objects::nonNull)
+			.peek(customer -> logger.trace("{}", customer))
 			.filter(filterCustomers::filterCustomersByDistanceToOffice)
 			.map(customer -> new CustomerToInvite(customer.getUserID(), customer.getName()))
 			.sorted(Comparator.comparingInt(CustomerToInvite::getUserID))
+			.peek(customerToInvite -> logger.trace("{}", customerToInvite))
 			.collect(Collectors.toList())
 		;
 	}
