@@ -1,8 +1,7 @@
 package com.ramirezblauvelt.invitecustomers.beans;
 
-import com.ramirezblauvelt.invitecustomers.services.ValidateCoordinates;
+import com.ramirezblauvelt.invitecustomers.config.ApplicationProperties;
 import lombok.EqualsAndHashCode;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,17 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @EqualsAndHashCode(callSuper = false)
 public class OfficeGpsLocationDegrees extends GpsLocationDegrees {
 
-	@Value("${application.office-location.latitude}")
-	private double officeLatitude;
-
-	@Value("${application.office-location.longitude}")
-	private double officeLongitude;
-
 	@Bean("officeLocation")
-	public OfficeGpsLocationDegrees getOfficeLocation(ValidateCoordinates validateCoordinates) {
-		validateCoordinates.validate(new GpsLocationDegrees(officeLatitude, officeLongitude));
-		setLatitude(officeLatitude);
-		setLongitude(officeLongitude);
+	public OfficeGpsLocationDegrees getOfficeLocation(ApplicationProperties applicationProperties) {
+		setLatitude(applicationProperties.getOfficeLocation().getLatitude());
+		setLongitude(applicationProperties.getOfficeLocation().getLongitude());
 		return this;
 	}
 
